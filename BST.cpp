@@ -1,11 +1,3 @@
-//============================================================================
-// Name        : FirstCpp.cpp
-// Author      : 
-// Version     :
-// Copyright   : Your copyright notice
-// Description : Hello World in C++, Ansi-style
-//============================================================================
-
 #include <iostream>
 #include <cmath>
 
@@ -28,6 +20,14 @@ void insert(Node * & root, int key){
 		insert(root->left, key);	//if key is smaller than current key, insert left
 }
 
+void preTraverse(Node * root){
+	if(root != 0){
+		cout << "Value: " << root->key << endl;
+		preTraverse(root->left);
+		preTraverse(root->right);
+	}
+}
+
 void inTraverse(Node * root){
 	if(root != 0){
 		inTraverse(root->left);
@@ -36,18 +36,10 @@ void inTraverse(Node * root){
 	}
 }
 
-void preTraverse(Node * root){
-	if(root != 0){
-		cout << "Value: " << root->key << endl;
-		inTraverse(root->left);
-		inTraverse(root->right);
-	}
-}
-
 void postTraverse(Node * root){
 	if(root != 0){
-		inTraverse(root->left);
-		inTraverse(root->right);
+		postTraverse(root->left);
+		postTraverse(root->right);
 		cout << "Value: " << root->key << endl;
 	}
 }
@@ -58,14 +50,27 @@ Node search(Node * root, int key){
 		search(root->left, key);
 		search(root->right, key);
 	} else {
-		return 0;
+		Node *nothing = 0;
+		return *nothing;
 	}
 }
 
 
 int main() {
 	Node *root = 0;
-	for(int i=0; i != 20; ++i) insert(root, rand() % 100);
+	//for(int i=0; i != 20; ++i) insert(root, rand() % 100);
+	insert(root, 2);
+	insert(root, 3);
+	insert(root, 1);
+
+	cout << "Pre " << "order traversal" << endl;
+	preTraverse(root);
+
+	cout << "In " << "order traversal" << endl;
 	inTraverse(root);
+
+	cout << "Post " << "order traversal" << endl;
+	postTraverse(root);
+
 	return 0;
 }
